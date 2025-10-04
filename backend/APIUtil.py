@@ -22,8 +22,25 @@ def parse_csv(file_path, delimiter=','):
         raise ValueError(f"CSV error: {e}")
 
 def extract_keywords(prompt: str):
+    # Lowercase words, filter short/common words, optionally use a stopword list
     words = re.findall(r'\w+', prompt.lower())
-    return [w for w in words if len(w) > 3]
+    keywords = [w for w in words if len(w) > 3]
+    return list(set(keywords))
+
+def keyword_cooccurrence_graph(prompt, csv_path="SB_publication_PMC.csv"):
+    prompt_keywords = set(extract_keywords(prompt))
+    articles = parse_csv(csv_path)
+    edges = set()
+    for article in articles:
+        title_words = set(re.findall(r'\w+', article["Title"].lower()))
+        present = prompt_keywords & title_words
+        if len(present) > 1:
+            for a, b in combinations(sorted(present), 2):
+                edges.add(tuple(sorted((a, b))))
+    return {
+        "nodes": sorted(prompt_keywords),
+        "edges": [{"source": a, "target": b} for a, b in edges]
+    }
 
 def fuzzy_finder(prompt, csv_path="SB_publication_PMC.csv", limit=10, cutoff=0.7):
     keywords = extract_keywords(prompt)
@@ -37,6 +54,7 @@ def fuzzy_finder(prompt, csv_path="SB_publication_PMC.csv", limit=10, cutoff=0.7
                 break
     if matches:
         return matches
+
     # Fallback: fuzzy match by prompt string vs titles
     titles = [paper["Title"] for paper in papers]
     best_titles = difflib.get_close_matches(prompt, titles, n=limit, cutoff=cutoff)
@@ -49,7 +67,17 @@ def fuzzy_finder(prompt, csv_path="SB_publication_PMC.csv", limit=10, cutoff=0.7
     return results
 
 def build_system_prompt(user_prompt, articles):
-    system = "You are a scientific assistant specializing in the field of space biology. Use the following references if relevant:\n"
+    system = (
+        "You are a scientific assistant specializing in space biology.\n"
+        "Cite each reference you use, by number or by its title, e.g., [Reference 2] or [Stem Cell Health and Tissue Regeneration in Microgravity]. "
+        "Given all references, synthesize a response to the user."
+        "If multiple references support a statement, cite all that apply. "
+        "Focus on accuracy, clarity, and relevance.\n"
+        "Given the user question and the references below, output a list of keyword/entity relationships in the form:\n"
+        '[{"source": "<keyword1>", "relation": "<relationship>", "target": "<keyword2>"}]\n'
+        "References:\n"
+        "\nReferences:\n"
+    )
     for idx, art in enumerate(articles, 1):
         system += f"{idx}. {art}\n"
     system += f"\nUser prompt: {user_prompt}\n"
