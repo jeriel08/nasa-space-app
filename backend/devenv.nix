@@ -7,7 +7,6 @@
   # https://devenv.sh/packages/
   packages = [ pkgs.git ];
 
-  # https://devenv.sh/languages/
   languages.python = {
     enable = true;
     uv = {
@@ -15,7 +14,6 @@
       sync.enable = true;
     };
   };
-
   # https://devenv.sh/processes/
   # processes.cargo-watch.exec = "cargo-watch";
 
