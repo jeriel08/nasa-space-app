@@ -12,13 +12,6 @@ class LLMQuery(BaseModel):
     max_tokens: int = 50
     temperature: float = 1.0
 
-@app.get("/")
-async def read_root():
-    return {"Hello": "World"}
-
-@app.get("/items/{item_id}")
-async def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
 
 @app.post("/llm/query")
 async def query_llm(llm_query: LLMQuery):
@@ -39,3 +32,4 @@ async def query_llm(llm_query: LLMQuery):
         return {"generated_text": response.text, "status": "success"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error interacting with Google Gemini API: {e}")
+
