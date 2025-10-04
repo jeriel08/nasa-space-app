@@ -14,6 +14,10 @@ class LLMQuery(BaseModel):
     max_tokens: int = 50
     temperature: float = 1.0
 
+class Query(BaseModel):
+    prompt: str
+
+
 @app.post("/query")
 async def query_llm(llm_query: LLMQuery):
     """
@@ -21,7 +25,9 @@ async def query_llm(llm_query: LLMQuery):
     """
     try:
         found_articles = fuzzy_finder(llm_query.prompt)
+        print("DEBUG: found_articles:", found_articles)
         system_prompt = build_system_prompt(llm_query.prompt, found_articles)
+        print("DEBUG: system prompt:", system_prompt)
         client = genai.Client()
         config = types.GenerateContentConfig(
             max_output_tokens=llm_query.max_tokens,
@@ -32,8 +38,9 @@ async def query_llm(llm_query: LLMQuery):
             contents=system_prompt,
             config=config,
         )
-        return {"generated_text": response.text, "status": "success"}
+        return {"generated_text": response.text, "found_articles": found_articles, "status": "success"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error interacting with Google Gemini API: {e}")
+
 
 
