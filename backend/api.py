@@ -20,8 +20,7 @@ async def query_llm(llm_query: LLMQuery):
     Interact with Gemini 2.5 Flash via google-genai SDK using the GEMINI_API_KEY from the environment.
     """
     try:
-        keywords = extract_keywords(llm_query.prompt)
-        found_articles = fuzzy_finder(keywords)
+        found_articles = fuzzy_finder(llm_query.prompt)
         system_prompt = build_system_prompt(llm_query.prompt, found_articles)
         client = genai.Client()
         config = types.GenerateContentConfig(
