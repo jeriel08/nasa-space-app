@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+    <style type="text/tailwindcss">
+      @theme {
+        --color-clifford: #da373d;
+      }
+    </style>
+    <title>L.I.F.T</title>
+  </head>
+  <body
+    class="bg-gray-100 min-h-screen bg-gradient-to-t from-[#3C2E84] to-black text-white"
+  >
+    <!-- Navigation -->
+    <nav class="text-white shadow-lg sticky top-0 z-50 px-8">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+          <!-- Logo -->
+          <a href="index.html" class="flex items-center space-x-2">
+            <img
+              src="assets/logo text.png"
+              alt="L.I.F.T Logo"
+              class="w-25 object-contain"
+            />
+          </a>
+
+          <!-- Desktop Menu -->
+          <div class="hidden md:flex space-x-1">
+            <a
+              href="index.html"
+              class="px-4 py-2 rounded-lg hover:bg-gray-800 transition-all duration-300 flex items-center"
+            >
+              Home
+            </a>
+            <a
+              href="about.html"
+              class="px-4 py-2 rounded-lg hover:bg-gray-800 transition-all duration-300 flex items-center"
+            >
+              About
+            </a>
+            <a
+              href="about.html"
+              class="px-4 py-2 rounded-lg hover:bg-gray-800 transition-all duration-300 flex items-center"
+            >
+              Contact
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main
+      class="flex flex-col items-center justify-center min-h-[calc(100vh-80px)]"
+    >
+      <h1 class="text-6xl font-bold text-white mb-8">L.I.F.T</h1>
+      <div class="w-full max-w-md">
+        <input
+          placeholder="Ask anything..."
+          type="email"
+          id="Email"
+          class="w-full rounded-lg border-gray-300 shadow-sm sm:text-sm p-4 text-black bg-white"
+        />
+      </div>
+    </main>
+  </body>
+</html>
