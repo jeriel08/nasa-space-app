@@ -1,25 +1,19 @@
 from typing import Union
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, APIRouter
 from pydantic import BaseModel
 
 from google import genai
 from google.genai import types
 
 from app.APIUtil import extract_keywords, fuzzy_finder, build_system_prompt
+from .schema import LLMQuery, QueryResponse, query_response_docs
 
 app = FastAPI()
 
-class LLMQuery(BaseModel):
-    prompt: str
-    max_tokens: int = 50
-    temperature: float = 1.0
-
-class Query(BaseModel):
-    prompt: str
-
+router = APIRouter()
 
 @app.post("/query")
-async def query_llm(llm_query: LLMQuery):
+async def query_llm(llm_query: LLMQuery) -> QueryResponse:
     """
     Interact with Gemini 2.5 Flash via google-genai SDK using the GEMINI_API_KEY from the environment.
     """
@@ -44,7 +38,11 @@ async def query_llm(llm_query: LLMQuery):
             contents=system_prompt,
             config=config,
         )
-        return {"generated_text": response.text, "found_articles": found_articles, "status": "success"}
+        return QueryResponse(
+            generated_text=response.text,
+            found_articles=found_articles,
+            status="success"
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error interacting with Google Gemini API: {e}")
 
