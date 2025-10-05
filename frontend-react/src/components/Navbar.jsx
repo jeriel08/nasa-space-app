@@ -2,7 +2,7 @@ import logo from "../assets/logo text.png";
 
 export default function Navbar() {
   return (
-    <nav class="text-white sticky bg-[image:url('/star.png')] top-0 z-50 px-8">
+    <nav class="text-white sticky bg-black top-0 z-50 px-8">
       <div class="container mx-auto px-4">
         <div class="flex justify-between items-center py-4">
           {/* Logo */}

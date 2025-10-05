@@ -186,7 +186,7 @@ const Chatbot = ({ isOpen, onClose }) => {
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Ask about space research, microgravity, radiation..."
+              placeholder="Ask about space, research..."
               className="w-full bg-gray-800 text-white rounded-xl px-4 py-3 pr-12 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm placeholder-gray-400 border border-gray-700"
               rows="1"
               style={{ minHeight: "50px", maxHeight: "120px" }}

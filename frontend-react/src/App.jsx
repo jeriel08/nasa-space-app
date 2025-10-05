@@ -28,7 +28,7 @@ function App() {
   ];
 
   return (
-    <div className="bg-gray-100 pb-8 min-h-screen bg-gradient-to-t from-[#3C2E84] to-black text-white font-display relative">
+    <div className="bg-gray-100 min-h-screen bg-gradient-to-t from-[#3C2E84] to-black text-white font-display relative">
       <StarsBackground />
       <Navbar />
 
@@ -94,7 +94,7 @@ function App() {
                   </div>
 
                   {/* Main Content Area */}
-                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 shadow-2xl">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-10 shadow-2xl">
                     {searchQuery ? (
                       // Show ResearchCard when there's a search query
                       <section>
