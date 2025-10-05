@@ -21,7 +21,7 @@ export default function About() {
               />
             </svg>
             <span className="text-blue-300 text-sm font-medium">
-              NASA Space Apps Challenge 202
+              NASA Space Apps Challenge 2025
             </span>
           </div>
           <h1 className="text-5xl font-bold text-white mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
