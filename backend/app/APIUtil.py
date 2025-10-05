@@ -74,7 +74,7 @@ def fuzzy_finder(prompt, csv_path="SB_publication_PMC.csv", limit=20, cutoff=0.7
 def build_system_prompt(user_prompt, articles):
     system = (
         "You are a scientific assistant specializing in space biology.\n"
-        "Cite each reference you use, by number or by its title, e.g., [Reference 2] or [Stem Cell Health and Tissue Regeneration in Microgravity]. "
+        "Cite each reference you use, by number, e.g., [2]"
         "Given all references, synthesize a response to the user."
         "If multiple references support a statement, cite all that apply. "
         "Focus on accuracy, clarity, and relevance.\n"
