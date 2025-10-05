@@ -170,7 +170,11 @@ export default function ResearchDetail({ researches }) {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={research.data}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#4B5563" />
-                  <XAxis dataKey="month" stroke="#9CA3AF" fontSize={12} />
+                  <XAxis
+                    dataKey={Object.keys(research.data[0])[0]}
+                    stroke="#9CA3AF"
+                    fontSize={12}
+                  />
                   <YAxis stroke="#9CA3AF" fontSize={12} />
                   <Tooltip
                     contentStyle={{
@@ -181,7 +185,26 @@ export default function ResearchDetail({ researches }) {
                       color: "white",
                     }}
                   />
-                  <Bar dataKey="density" fill="#3B82F6" radius={[4, 4, 0, 0]} />
+                  {/* Render bars for all data keys except the first one (which is used for XAxis) */}
+                  {Object.keys(research.data[0])
+                    .slice(1)
+                    .map((key, index) => (
+                      <Bar
+                        key={key}
+                        dataKey={key}
+                        fill={
+                          [
+                            "#3B82F6",
+                            "#10B981",
+                            "#EF4444",
+                            "#8B5CF6",
+                            "#F59E0B",
+                            "#EC4899",
+                          ][index % 6]
+                        }
+                        radius={[4, 4, 0, 0]}
+                      />
+                    ))}
                 </BarChart>
               </ResponsiveContainer>
             </div>
