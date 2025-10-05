@@ -1,12 +1,14 @@
 export const researchData = [
   {
     id: 1,
-    title: "Microgravity Bone Loss Study",
+    title:
+      "Microgravity induces pelvic bone loss through osteoclastic activity, osteocytic osteolysis, and osteoblastic cell cycle inhibition by CDKN1a/p21	",
     summary: "15% density reduction in space over 6-month period.",
     year: 2023,
     theme: "Human Physiology",
     authors: ["Dr. Sarah Chen", "Dr. Marcus Rodriguez", "Dr. Elena Petrova"],
     doi: "10.1234/space.2023.001",
+    link: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3630201/",
     data: [
       { month: "Jan", density: 100 },
       { month: "Feb", density: 95 },
@@ -28,13 +30,14 @@ export const researchData = [
   },
   {
     id: 2,
-    title: "Plant Growth Under LED in Microgravity",
+    title: "Plant growth strategies are remodeled by spaceflight",
     summary:
       "Enhanced root development observed with specific LED spectra in microgravity conditions.",
     year: 2022,
     theme: "Plant Biology",
     authors: ["Dr. Alex Johnson", "Dr. Maria Gonzalez", "Dr. Kenji Tanaka"],
     doi: "10.1234/space.2022.045",
+    link: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11869762/",
     data: [
       { week: "1", growth: 10, roots: 5 },
       { week: "2", growth: 25, roots: 12 },

@@ -241,7 +241,7 @@ export default function ResearchDetail({ researches }) {
           {research.doi && (
             <div className="pt-6 border-t border-white/10">
               <a
-                href={`https://doi.org/${research.doi}`}
+                href={`${research.link}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-6 py-3 rounded-xl text-white font-semibold transition-all duration-300 transform hover:-translate-y-0.5"
