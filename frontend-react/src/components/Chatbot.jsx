@@ -42,7 +42,7 @@ const Chatbot = ({ isOpen, onClose }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt: inputMessage }),
+        body: JSON.stringify({ prompt: inputMessage, max_token: 1000 }),
       });
 
       if (!response.ok) {
@@ -53,7 +53,7 @@ const Chatbot = ({ isOpen, onClose }) => {
 
       const aiMessage = {
         id: messages.length + 2,
-        text: data.response,
+        text: data.generated_text,
         isUser: false,
         timestamp: new Date(),
       };
