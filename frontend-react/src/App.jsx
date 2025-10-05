@@ -7,6 +7,7 @@ import Chatbot from "./components/Chatbot";
 import ResearchDetail from "./components/ResearchDetail";
 import StarsBackground from "./components/StarsBackground";
 import ResearchCard from "./components/ResearchCard";
+import About from "./components/About";
 import { researchData } from "./data/researchData";
 import { Routes, Route, Link } from "react-router-dom";
 
@@ -77,7 +78,7 @@ function App() {
           <Route
             path="/"
             element={
-              <main className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)]">
+              <main className="flex flex-col mt-8 items-center justify-center min-h-[calc(100vh-80px)]">
                 <div className="container max-w-4xl mx-auto px-4 flex flex-col items-center justify-center">
                   {/* Centered Header */}
                   <div className="w-3xl">
@@ -152,6 +153,7 @@ function App() {
             path="/research/:id"
             element={<ResearchDetail researches={filteredLatest} />}
           />
+          <Route path="/about" element={<About />} />
         </Routes>
       </div>
 
