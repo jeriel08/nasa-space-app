@@ -7,6 +7,7 @@ const Chatbot = ({ isOpen, onClose }) => {
       text: "Hello! I'm your space research assistant for L.I.F.T. I can help you explore topics like microgravity effects, radiation studies, plant biology in space, and recent space research findings. What would you like to know?",
       isUser: false,
       timestamp: new Date(),
+      articles: [],
     },
   ]);
   const [inputMessage, setInputMessage] = useState("");
@@ -21,6 +22,23 @@ const Chatbot = ({ isOpen, onClose }) => {
     scrollToBottom();
   }, [messages]);
 
+  // Function to parse article string into title and URL
+  const parseArticle = (articleString) => {
+    // Expected format: "Article Title (https://example.com/article)"
+    const match = articleString.match(/^(.+?)\s*\((.+?)\)$/);
+    if (match) {
+      return {
+        title: match[1].trim(),
+        url: match[2].trim(),
+      };
+    }
+    // Fallback: if format doesn't match, use the whole string as title and no URL
+    return {
+      title: articleString,
+      url: null,
+    };
+  };
+
   const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
 
@@ -29,6 +47,7 @@ const Chatbot = ({ isOpen, onClose }) => {
       text: inputMessage,
       isUser: true,
       timestamp: new Date(),
+      articles: [],
     };
 
     setMessages((prev) => [...prev, userMessage]);
@@ -51,11 +70,15 @@ const Chatbot = ({ isOpen, onClose }) => {
 
       const data = await response.json();
 
+      // Parse found_articles into title/url objects
+      const parsedArticles = (data.found_articles || []).map(parseArticle);
+
       const aiMessage = {
         id: messages.length + 2,
         text: data.generated_text,
         isUser: false,
         timestamp: new Date(),
+        articles: parsedArticles,
       };
 
       setMessages((prev) => [...prev, aiMessage]);
@@ -66,6 +89,7 @@ const Chatbot = ({ isOpen, onClose }) => {
         text: "Sorry, I'm having trouble connecting to the AI service. Please try again later.",
         isUser: false,
         timestamp: new Date(),
+        articles: [],
       };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
@@ -77,6 +101,12 @@ const Chatbot = ({ isOpen, onClose }) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
+    }
+  };
+
+  const handleArticleClick = (articleUrl) => {
+    if (articleUrl) {
+      window.open(articleUrl, "_blank", "noopener,noreferrer");
     }
   };
 
@@ -127,6 +157,36 @@ const Chatbot = ({ isOpen, onClose }) => {
               }`}
             >
               <p className="text-sm leading-relaxed">{message.text}</p>
+
+              {/* Articles Section */}
+              {message.articles && message.articles.length > 0 && (
+                <div className="mt-3 space-y-2">
+                  <p className="text-xs text-gray-300 font-medium mb-2">
+                    Related Articles:
+                  </p>
+                  <div className="flex flex-col gap-2">
+                    {message.articles.map((article, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleArticleClick(article.url)}
+                        disabled={!article.url}
+                        className={`text-xs text-left rounded-lg px-3 py-2 transition-colors border break-words max-w-full ${
+                          article.url
+                            ? "bg-blue-500 hover:bg-blue-600 text-white border-blue-400 cursor-pointer"
+                            : "bg-gray-600 text-gray-300 border-gray-500 cursor-not-allowed"
+                        }`}
+                        title={article.url || "No URL available"}
+                      >
+                        <div className="flex items-start">
+                          <span className="mr-2 flex-shrink-0">📄</span>
+                          <span className="flex-1">{article.title}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <p className="text-xs opacity-70 mt-2 text-right">
                 {message.timestamp.toLocaleTimeString([], {
                   hour: "2-digit",
