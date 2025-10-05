@@ -10,7 +10,22 @@ from .schema import LLMQuery, QueryResponse, query_response_docs
 
 app = FastAPI()
 
-router = APIRouter()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # For development; restrict in production!
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+class LLMQuery(BaseModel):
+    prompt: str
+    max_tokens: int = 1000
+    temperature: float = 1.0
+
+class Query(BaseModel):
+    prompt: str
+
 
 @app.post("/query")
 async def query_llm(llm_query: LLMQuery) -> QueryResponse:
