@@ -1,5 +1,6 @@
 from typing import Union
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from google import genai
@@ -9,9 +10,17 @@ from app.APIUtil import extract_keywords, fuzzy_finder, build_system_prompt
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # For development; restrict in production!
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 class LLMQuery(BaseModel):
     prompt: str
-    max_tokens: int = 50
+    max_tokens: int = 1000
     temperature: float = 1.0
 
 class Query(BaseModel):
