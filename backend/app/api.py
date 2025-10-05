@@ -1,5 +1,6 @@
 from typing import Union
 from fastapi import FastAPI, HTTPException, APIRouter
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from google import genai
@@ -20,7 +21,7 @@ app.add_middleware(
 
 class LLMQuery(BaseModel):
     prompt: str
-    max_tokens: int = 1000
+    max_tokens: int = 2500
     temperature: float = 1.0
 
 class Query(BaseModel):
