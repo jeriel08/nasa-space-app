@@ -254,6 +254,7 @@ dependencies = [
     { name = "google" },
     { name = "google-genai" },
     { name = "requests" },
+    { name = "uvicorn" },
 ]
 
 [package.metadata]
@@ -262,6 +263,7 @@ requires-dist = [
     { name = "google", specifier = ">=3.0.0" },
     { name = "google-genai", specifier = ">=1.41.0" },
     { name = "requests", specifier = ">=2.32.5" },
+    { name = "uvicorn", specifier = ">=0.37.0" },
 ]
 
 [[package]]
