@@ -14,31 +14,6 @@ function App() {
   const [searchQuery, setSearchQuery] = useState(""); // For filtering
   const [showChatbot, setShowChatbot] = useState(false); // Toggle chat
 
-  // Mock data (replace with API: useEffect(() => { fetch... }, []))
-  // const mockLatest = [
-  //   {
-  //     id: 1,
-  //     title: "Microgravity Bone Loss Study",
-  //     summary: "15% density reduction in space.",
-  //     year: 2023,
-  //     theme: "Human Physiology",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Plant Growth Under LED",
-  //     summary: "Enhanced roots; gap in Mars soil.",
-  //     year: 2022,
-  //     theme: "Plant Biology",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Radiation Effects on Cells",
-  //     summary: "Consensus: Shields needed for Mars.",
-  //     year: 2024,
-  //     theme: "Radiation",
-  //   },
-  // ];
-
   const filteredLatest = researchData.filter(
     (item) =>
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -53,7 +28,7 @@ function App() {
   ];
 
   return (
-    <div className="bg-gray-100 min-h-screen bg-gradient-to-t from-[#3C2E84] to-black text-white font-display relative">
+    <div className="bg-gray-100 pb-8 min-h-screen bg-gradient-to-t from-[#3C2E84] to-black text-white font-display relative">
       <StarsBackground />
       <Navbar />
 
@@ -103,18 +78,20 @@ function App() {
             path="/"
             element={
               <main className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)]">
-                <div className="container max-w-3xl mx-auto px-4">
+                <div className="container max-w-4xl mx-auto px-4 flex flex-col items-center justify-center">
                   {/* Centered Header */}
-                  <div className="text-center mb-12">
-                    <h1 className="text-6xl font-bold text-white mb-4">
-                      L.I.F.T
-                    </h1>
-                  </div>
+                  <div className="w-3xl">
+                    <div className="text-center mb-12">
+                      <h1 className="text-6xl font-bold text-white mb-4">
+                        L.I.F.T
+                      </h1>
+                    </div>
 
-                  <SearchInput
-                    query={searchQuery}
-                    onQueryChange={setSearchQuery}
-                  />
+                    <SearchInput
+                      query={searchQuery}
+                      onQueryChange={setSearchQuery}
+                    />
+                  </div>
 
                   {/* Main Content Area */}
                   <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 shadow-2xl">
@@ -160,7 +137,7 @@ function App() {
                         {/* Recent Activity */}
                         <section>
                           <h3 className="text-lg font-semibold mb-4 text-center">
-                            Recent Research
+                            Recent Publications
                           </h3>
                           <LatestResearches researches={filteredLatest} />
                         </section>
